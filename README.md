@@ -15,7 +15,7 @@ Golang 简单文件系统
 -p 服务启动端口
 
 ```text
-go run main.go -f ./file -p 9001
+go run *.go -FilePath ./file -Port 9081
 ```
 
 # 示例
