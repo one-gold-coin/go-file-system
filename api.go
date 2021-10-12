@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/one-gold-coin/getenv"
 	"net/http"
 	"os"
 	"path"
@@ -35,7 +36,7 @@ func upload(ctx *gin.Context) {
 
 		fileSuffix := path.Ext(filename)
 		//判断可上传文件类型
-		if !CheckFileType(fileSuffix, FlagFileType) {
+		if !CheckFileType(fileSuffix, getenv.GetVal("FILE_TYPE").String()) {
 			result.Code = -1
 			result.Msg = "非法文件类型"
 			ctx.JSON(http.StatusOK, result)
@@ -47,7 +48,7 @@ func upload(ctx *gin.Context) {
 
 		fileHashDir := HashMakeDir(fileMd5) //获取文件存储路径
 
-		fileDir := FlagFilePath + "/" + fileHashDir
+		fileDir := getenv.GetVal("FILE_PATH").String() + "/" + fileHashDir
 		err = MkdirAll(fileDir) //生成文件目录
 		if err != nil {
 			result.Code = -1
@@ -56,7 +57,7 @@ func upload(ctx *gin.Context) {
 			return
 		}
 
-		filePath := FlagFilePath + "/" + GetFilePath(fileMd5)
+		filePath := getenv.GetVal("FILE_PATH").String() + "/" + GetFilePath(fileMd5)
 
 		//文件是否存在
 		exists, _ := PathExists(GetFilePath(fileMd5))
@@ -87,7 +88,7 @@ func file(ctx *gin.Context) {
 	fileMd5 := ctx.Param("file_key")
 	filePath := GetFilePath(fileMd5)
 	//文件是否存在
-	exists, _ := PathExists(FlagFilePath + "/" + filePath)
+	exists, _ := PathExists(getenv.GetVal("FILE_PATH").String() + "/" + filePath)
 	if !exists {
 		ctx.Redirect(http.StatusNotFound, "")
 		return
@@ -101,7 +102,7 @@ func imgOriginal(ctx *gin.Context) {
 	fileMd5 := ctx.Param("file_key")
 	filePath := GetFilePath(fileMd5)
 	//文件是否存在
-	exists, _ := PathExists(FlagFilePath + "/" + filePath)
+	exists, _ := PathExists(getenv.GetVal("FILE_PATH").String() + "/" + filePath)
 	if !exists {
 		ctx.Redirect(http.StatusNotFound, "")
 		return
@@ -120,14 +121,14 @@ func imgScale(ctx *gin.Context) {
 	//文件是否存在
 	p := filePath
 	newP := GetScaleImgPath(p, width, height, quality)
-	exists, _ := PathExists(FlagFilePath + "/" + newP)
+	exists, _ := PathExists(getenv.GetVal("FILE_PATH").String() + "/" + newP)
 	if !exists {
-		fIn, err := os.Open(FlagFilePath + "/" + p)
+		fIn, err := os.Open(getenv.GetVal("FILE_PATH").String() + "/" + p)
 		if err != nil {
 			panic(err)
 		}
 		defer fIn.Close()
-		fOut, _ := os.Create(FlagFilePath + "/" + newP)
+		fOut, _ := os.Create(getenv.GetVal("FILE_PATH").String() + "/" + newP)
 		defer fOut.Close()
 		widthInt, _ := strconv.Atoi(width)
 		heightInt, _ := strconv.Atoi(height)

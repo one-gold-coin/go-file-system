@@ -1,2 +1,4 @@
 ./file/*
 file/*
+env
+.env
