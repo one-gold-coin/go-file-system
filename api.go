@@ -87,7 +87,7 @@ func upload(ctx *gin.Context) {
 func file(ctx *gin.Context) {
 	fileMd5 := ctx.Param("file_key")
 	if fileMd5 == "" {
-		ctx.Redirect(http.StatusNotFound, "")
+		ctx.Redirect(http.StatusFound, "/404")
 		return
 	}
 
@@ -95,7 +95,7 @@ func file(ctx *gin.Context) {
 	//文件是否存在
 	exists, _ := PathExists(getenv.GetVal("FILE_PATH").String() + "/" + filePath)
 	if !exists {
-		ctx.Redirect(http.StatusNotFound, "")
+		ctx.Redirect(http.StatusFound, "/404")
 		return
 	}
 	//转发
@@ -106,14 +106,14 @@ func file(ctx *gin.Context) {
 func imgOriginal(ctx *gin.Context) {
 	fileMd5 := ctx.Param("file_key")
 	if fileMd5 == "" {
-		ctx.Redirect(http.StatusNotFound, "")
+		ctx.Redirect(http.StatusFound, "/404")
 		return
 	}
 	filePath := GetFilePath(fileMd5)
 	//文件是否存在
 	exists, _ := PathExists(getenv.GetVal("FILE_PATH").String() + "/" + filePath)
 	if !exists {
-		ctx.Redirect(http.StatusNotFound, "")
+		ctx.Redirect(http.StatusFound, "/404")
 		return
 	}
 	//转发
@@ -124,7 +124,7 @@ func imgOriginal(ctx *gin.Context) {
 func imgScale(ctx *gin.Context) {
 	fileMd5 := ctx.Param("file_key")
 	if fileMd5 == "" {
-		ctx.Redirect(http.StatusNotFound, "")
+		ctx.Redirect(http.StatusFound, "/404")
 		return
 	}
 	width := ctx.Param("width")

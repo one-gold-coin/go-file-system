@@ -15,6 +15,8 @@ func Routers(router *gin.Engine) {
 		router.Static("/"+getenv.GetVal("STATIC_PROXY_PATH").String(), getenv.GetVal("FILE_PATH").String())
 	}
 
+	router.StaticFile("/404", "./404.png")
+
 	//文件上传
 	router.POST("/upload", upload)
 
