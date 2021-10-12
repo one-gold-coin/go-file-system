@@ -25,9 +25,9 @@ func Routers(router *gin.Engine) {
 	router.GET("/file/:file_key", file)
 
 	//原始图片访问
-	router.GET("/img/original/:file_key", imgOriginal)
+	router.GET("/img/:file_key", imgOriginal)
 
 	//压缩图片访问
-	router.GET("/img/scale/:file_key/:width/:height/:quality", imgScale)
+	router.GET("/img/:file_key/scale/:width/:height/:quality", imgScale)
 
 }

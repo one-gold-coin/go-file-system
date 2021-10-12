@@ -10,12 +10,11 @@ Golang 简单文件系统
 项目自支持文件转发机制，访问文件是，可以修改成Nginx
 
 # 启动项目
--f 指定文件存放目录
+-f 指定配置文件
 
--p 服务启动端口
 
 ```text
-go run *.go -FilePath ./file -Port 9081
+go run *.go -f .env.example
 ```
 
 # 示例
@@ -37,17 +36,17 @@ file_key：文件key；接口1返回
 
 访问地址：127.0.0.1:9001/file/f187d470506a19c3f0bb54fbb84ee6f2
 
-3、图片类型，原始图片访问：127.0.0.1:9001/img/original/:file_key
+3、图片类型，原始图片访问：127.0.0.1:9001/img/:file_key
 file_key：文件key；接口1返回
 
-访问地址：127.0.0.1:9001/img/original/f187d470506a19c3f0bb54fbb84ee6f2
+访问地址：127.0.0.1:9001/img/f187d470506a19c3f0bb54fbb84ee6f2
 
-4、图片类型、压缩图片访问，可自定义尺寸：127.0.0.1:9001/img/scale/:file_key/:width/:height/:quality
+4、图片类型、压缩图片访问，可自定义尺寸：127.0.0.1:9001/img/:file_key/scale/:width/:height/:quality
 file_key：文件key；接口1返回
 width: 图片长度，单位像素
 height: 图片高度，单位像素
 quality: 图片质量，0～100指定，传0则为100
 
-访问地址：127.0.0.1:9001/img/scale/f187d470506a19c3f0bb54fbb84ee6f2/200/200/0
+访问地址：127.0.0.1:9001/img/f187d470506a19c3f0bb54fbb84ee6f2/scale/200/200/0
 
 ```
